@@ -5,12 +5,6 @@
 
 
 
-
-"os対策sep
-
-
-
-
 "現在編集しているファイルのディレクトリに plugin autoload　のフォルダがあれば
 "現在のdirectory名.vimを autoload plugin フォルダからそれぞれ読み込む
 "
@@ -24,7 +18,6 @@
 "開発プラグイン等の保存先
 "g:VimDevFolder = '~/...'
 
-let s:sep = '\'
 
 function! VimPluginCreateSupport#LoadFiles()
 
@@ -32,27 +25,27 @@ function! VimPluginCreateSupport#LoadFiles()
 
     "現在編集中のファイルパス
     let l:dir = expand( "%:p:h" ) 
-    "現在編集しているファイルがautoload or plugin or doc の中の場合 
-    echo 'l:dir :' . l:dir
+    "echo 'l:dir :' . l:dir
 
-    let l:check = substitute( l:dir , '.*' . s:sep , '' , 'g' )
-    echo l:check
+    "現在編集しているファイルがautoload or plugin or doc の中の場合 
+    let l:check = substitute( l:dir , '.*\' , '' , 'g' )
+    "echo 'l:check :' . l:check
     if l:check == 'autoload' || l:check == 'plugin' || l:check == 'doc'
         let l:dir = substitute( l:dir , l:check . '$' , '' , 'g' )
-        let l:dir = substitute( l:dir , s:sep .'$' , '' , 'g' )
-        echo 'l:dir :' . l:dir
+        let l:dir = substitute( l:dir , '\\$' , '' , 'g' )
+        "echo 'l:dir :' . l:dir
     endif
 
 
     "autoloadとpluginが存在している場合に処理をする
-    if isdirectory( l:dir . s:sep . 'autoload' ) && isdirectory( l:dir . s:sep . 'plugin' )
+    if isdirectory( l:dir . '/autoload' ) && isdirectory( l:dir . '/plugin' )
 
         let l:plugin_name = substitute( l:dir , '.*\\.\{-}' , '' , 'g' )
-        echo 'l:plugin_name :' . l:plugin_name
+        "echo 'l:plugin_name :' . l:plugin_name
 
         "フォルダ名.vimをそれぞれ読み込むように
-        let l:autoload_vim = l:dir . s:sep . 'autoload' . s:sep . l:plugin_name . '.vim'
-        let l:plugin_vim   = l:dir . s:sep . 'plugin'   . s:sep . l:plugin_name . '.vim'
+        let l:autoload_vim = l:dir . '/autoload/' . l:plugin_name . '.vim'
+        let l:plugin_vim   = l:dir . '/plugin/'   . l:plugin_name . '.vim'
 
         if filereadable( l:autoload_vim )
             echo 'load : ' . l:autoload_vim
@@ -62,11 +55,27 @@ function! VimPluginCreateSupport#LoadFiles()
             echo 'load : ' . l:plugin_vim
             execute 'source ' . l:plugin_vim
         endif
-
+        
     "直近で編集したファイルがあればそれを読み込む
-    "elseif exists( "s:NewPluginDirectory" )
-    
+    else
+        if exists( "s:NewPluginDirectory" )
+
+            echo s:NewPluginDirectory
+            let l:autoload_vim = s:NewPluginDirectory . '/autoload/' . s:NewPluginName . '.vim'
+            let l:plugin_vim   = s:NewPluginDirectory . '/plugin/'   . s:NewPluginName . '.vim'
+
+            if filereadable( l:autoload_vim )
+                echo 'load : ' . l:autoload_vim
+                execute 'source ' . l:autoload_vim
+            endif
+            if filereadable( l:plugin_vim )
+                echo 'load : ' . l:plugin_vim
+                execute 'source ' . l:plugin_vim
+            endif
+        endif
     endif
+
+
 endfunction
 
 
@@ -82,20 +91,14 @@ function! VimPluginCreateSupport#MakeFiles( PluginName )
     execute( 'tabe' )
     "pluginの保存先が指定されている場合はそちらに移動
     if exists( "g:VimDevFolder" )
-        "let s:folder = expand( g:VimDevFolder )
-        let s:NewPluginDirectory = expand( g:VimDevFolder )
-        "execute( 'lcd ' . s:folder )
-    else
-        let s:NewPluginDirectory = "./"
+        execute( 'lcd ' . expand( g:VimDevFolder ))
     endif
 
-    "同名フォルダが存在する場合回避
     if !isdirectory( a:PluginName )
         call mkdir( a:PluginName )
     endif
-    let s:NewPluginDirectory = s:NewPluginDirectory  . "/" . a:PluginName 
-    execute( 'lcd ./' . s:NewPluginDirectory )
 
+    execute( 'lcd ./' . a:PluginName )
 
     if !exists(  './autoload' )
         call mkdir( './autoload' )
@@ -106,6 +109,8 @@ function! VimPluginCreateSupport#MakeFiles( PluginName )
 
     execute( 'edit ./autoload/' . a:PluginName . '.vim' )
     execute( 'vs ./plugin/'     . a:PluginName . '.vim' )
+    let s:NewPluginName = a:PluginName
+    let s:NewPluginDirectory = getcwd()
 endfunction
 
 
