@@ -60,7 +60,7 @@ function! VimPluginCreateSupport#LoadFiles()
     else
         if exists( "s:NewPluginDirectory" )
 
-            echo s:NewPluginDirectory
+            echo 'load plugin path : ' . s:NewPluginDirectory
             let l:autoload_vim = s:NewPluginDirectory . '/autoload/' . s:NewPluginName . '.vim'
             let l:plugin_vim   = s:NewPluginDirectory . '/plugin/'   . s:NewPluginName . '.vim'
 
