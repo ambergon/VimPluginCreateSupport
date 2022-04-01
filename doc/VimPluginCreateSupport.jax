@@ -89,7 +89,8 @@ g:VimPluginCreateSupportFolder		*g:VimPluginCreateSupportFolder*
 
 
 現在のディレクトリが上記ではなく、
-またこのセッション中にNewPluginコマンドを使用して新しいプラグインを作成した場合はそのプラグインを読み込みなおします。
+またこのセッション中にNewPlugin もしくは NewPluginLoad
+コマンドを使用してプラグインを読み込んだ場合、直近のプラグインを読み込みます。
 
 
 

@@ -39,6 +39,8 @@ function! VimPluginCreateSupport#LoadFiles()
             echo 'load : ' . l:plugin_vim
             execute 'source ' . l:plugin_vim
         endif
+
+        let s:NewPluginDirectory = l:dir
         
     "直近で編集したファイルがあればそれを読み込む
     else
