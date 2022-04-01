@@ -1,15 +1,17 @@
-#VimPluginCreateSupport
+:VimPluginCreateSupport
+=======
 
 快適なプラグイン作成を補助するために作成されました。
 
-##環境
+:環境
+----
 
 - Win10
 - nyagos
 - vim8.2
 
-##変数
-###g:VimPluginCreateSupportFolder
+:変数 g:VimPluginCreateSupportFolder
+----
 
 必須ではありません。
 設定していると、新しくプラグインを作成する際に
@@ -17,8 +19,8 @@
 
 指定していない場合は現在のカレントディレクトリ( :lcd )に作成されます。
 
-##コマンド
-###NewPlugin {}
+:コマンド NewPlugin {}
+----
 引数に新しいプラグイン名を取ります。
 
 新しいタブを開き
@@ -38,7 +40,9 @@
 
 
 
-###NewPluginLoad
+:コマンド　NewPluginLoad
+----
+
 現在のカレントディレクトリにautoloadとpluginフォルダが存在している場合
 現在のディレクトリ名.vimをそれぞれsourceコマンドで読み込みます。
 
@@ -50,9 +54,11 @@
 コマンドを使用してプラグインを読み込んだ場合、直近のプラグインを読み込みます。
 
 
-##License
+:License
+----
 MIT
 
-##Author
+:Author
+----
 ambergon
 [twitter](https://twitter.com/Sc_lFoxGon)
