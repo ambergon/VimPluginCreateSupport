@@ -16,7 +16,7 @@
 
 
 "開発プラグイン等の保存先
-"g:VimDevFolder = '~/...'
+"g:VimPluginCreateSupportFolder = '~/...'
 
 
 function! VimPluginCreateSupport#LoadFiles()
@@ -80,7 +80,7 @@ endfunction
 
 
 
-"現在のカレントディレクトリにもしくはg:VimDevFolderに下記のように展開する
+"現在のカレントディレクトリにもしくはg:VimPluginCreateSupportFolderに下記のように展開する
 "PluginName
 "├─autoload
 "└─plugin
@@ -90,8 +90,8 @@ function! VimPluginCreateSupport#MakeFiles( PluginName )
 
     execute( 'tabe' )
     "pluginの保存先が指定されている場合はそちらに移動
-    if exists( "g:VimDevFolder" )
-        execute( 'lcd ' . expand( g:VimDevFolder ))
+    if exists( "g:VimPluginCreateSupportFolder" )
+        execute( 'lcd ' . expand( g:VimPluginCreateSupportFolder ))
     endif
 
     if !isdirectory( a:PluginName )
