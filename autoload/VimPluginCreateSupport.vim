@@ -3,22 +3,6 @@
 
 
 
-
-
-"現在編集しているファイルのディレクトリに plugin autoload　のフォルダがあれば
-"現在のdirectory名.vimを autoload plugin フォルダからそれぞれ読み込む
-"
-"現在編集しているファイルのディレクトリがautoload or plugin or docならば
-"ひとつ前のディレクトリを確認する。
-"
-"
-"
-
-
-"開発プラグイン等の保存先
-"g:VimPluginCreateSupportFolder = '~/...'
-
-
 function! VimPluginCreateSupport#LoadFiles()
 
     let l:plugin_name = ''
@@ -80,11 +64,6 @@ endfunction
 
 
 
-"現在のカレントディレクトリにもしくはg:VimPluginCreateSupportFolderに下記のように展開する
-"PluginName
-"├─autoload
-"└─plugin
-"
 "新しいタブで開き、lcdはPluginName Folderに設定される。
 function! VimPluginCreateSupport#MakeFiles( PluginName )
 
